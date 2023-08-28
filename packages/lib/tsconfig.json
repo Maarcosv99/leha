@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "strict": true,
+        "moduleResolution": "node",
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "types": [
+            "node"
+        ],
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "test",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

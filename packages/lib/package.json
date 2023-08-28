@@ -1,0 +1,76 @@
+{
+  "author": {
+    "email": "marcosvianacdc@gmail.com",
+    "name": "Marcos Viana"
+  },
+  "description": "Lightweight, event-agnostic handler for serverless applications.",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "@types/node": "^20.5.0",
+    "files-folder": "^1.2.4",
+    "tsup": "^7.2.0",
+    "typescript": "^5.1.6",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.34.2",
+    "yup": "^1.2.0",
+    "zod": "^3.22.2"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./middlewares": {
+      "default": "./dist/middlewares/index.js",
+      "import": "./dist/middlewares/index.js",
+      "require": "./dist/middlewares/index.cjs",
+      "types": "./dist/middlewares/index.d.ts"
+    },
+    "./providers": {
+      "default": "./dist/providers/index.js",
+      "import": "./dist/providers/index.js",
+      "require": "./dist/providers/index.cjs",
+      "types": "./dist/providers/index.d.ts"
+    },
+    "./types": {
+      "default": "./dist/types/index.js",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.cjs",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "aws",
+    "azure",
+    "cloudflare",
+    "lambda",
+    "aws lambda",
+    "azure functions",
+    "cloudflare workers",
+    "serverless",
+    "serverless functions",
+    "serverless framework",
+    "sls framework"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "leha",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup-node --config ./tsup.config.ts",
+    "test": "vitest"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.1.0"
+}

@@ -1,0 +1,25 @@
+{
+  "author": "",
+  "dependencies": {
+    "eha-serverless": "workspace:eha-serverless",
+    "zod": "^3.22.2"
+  },
+  "description": "",
+  "devDependencies": {
+    "@serverless/typescript": "^3.30.1",
+    "@types/node": "^20.5.0",
+    "serverless": "^3.34.0",
+    "serverless-esbuild": "^1.46.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "aws-serverless-framework",
+  "scripts": {
+    "deploy": "sls deploy --stage development",
+    "undeploy": "sls remove --stage development"
+  },
+  "version": "1.0.0"
+}
