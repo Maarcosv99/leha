@@ -20,7 +20,9 @@ describe("Aws provider", async () => {
 			expect(ctx.req.method).toBe(apiEvent.method);
 			expect(ctx.req.pathParameters).toBe(apiEvent.path);
 			expect(ctx.req.cookies).toBe(apiEvent.headers["Cookie"]);
-			expect(ctx.req.ipAddress).toBe(apiEvent.requestContext.identity.sourceIp);
+			expect(ctx.req.ipAddress).toBe(
+				apiEvent.requestContext.identity.sourceIp
+			);
 			expect(ctx.req.queryStringParameters).toBe(apiEvent.query);
 			expect(ctx.raw).toBe(apiEvent);
 		})(apiEvent);
@@ -68,8 +70,8 @@ describe("Aws provider", async () => {
 			statusCode: 200,
 			body: JSON.stringify({ success: true }, null, 2),
 			headers: {
-				authorization: "123",
-				"content-type": "application/json",
+				Authorization: "123",
+				"Content-Type": "application/json",
 			},
 			isBase64Encoded: false,
 		});

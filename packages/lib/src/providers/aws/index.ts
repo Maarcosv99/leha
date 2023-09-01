@@ -23,6 +23,15 @@ export const Aws = (): Provider => {
 		}
 	};
 
+	const camelize = (key: string): string => {
+		const splitter = key.includes("-") ? "-" : " ";
+		const camelizedParts = key
+			.split(splitter)
+			.map((part) => part[0].toUpperCase() + part.slice(1));
+		if (splitter === "-") return camelizedParts.join(splitter);
+		return camelizedParts.join("");
+	};
+
 	return {
 		api: {
 			handleRequest: (event: APIGatewayProxyEvent): ApiRequest => {
@@ -47,10 +56,17 @@ export const Aws = (): Provider => {
 			handleResponse: (response: ApiResponse): APIGatewayProxyResult => {
 				const exportedResponse = response.export;
 
+				const headersCamelized = Object.entries(
+					exportedResponse.headers
+				).reduce((acc, [key, value]) => {
+					acc[camelize(key)] = value;
+					return acc;
+				}, {} as Record<string, any>);
+
 				return {
 					statusCode: exportedResponse.statusCode,
 					body: exportedResponse.body || "",
-					headers: exportedResponse.headers,
+					headers: headersCamelized,
 					isBase64Encoded: exportedResponse.isBase64Encoded,
 				};
 			},
