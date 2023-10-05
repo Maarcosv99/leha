@@ -5,7 +5,7 @@ import { eventHandlerSetup } from "@/setup";
 import { CustomProvider } from "test/fixture/provider";
 import { apiEvent } from "test/fixture/api-event";
 
-import { zodValidator } from "@/middlewares";
+import { zodValidator } from "@/addons/middlewares";
 import { z } from "zod";
 
 describe("Zod Validator middleware api", async () => {
@@ -41,9 +41,12 @@ describe("Zod Validator middleware api", async () => {
 			name: z.string().min(3).max(255),
 		});
 
-		const res = await api([zodValidator("query", schema, true)], async (ctx) => {
-			ctx.res.json({ success: true });
-		})(apiEvent);
+		const res = await api(
+			[zodValidator("query", schema, true)],
+			async (ctx) => {
+				ctx.res.json({ success: true });
+			}
+		)(apiEvent);
 
 		const response = res as any;
 
@@ -113,10 +116,13 @@ describe("Zod Validator middleware api", async () => {
 			body: { name: "John Doe" },
 		};
 
-		const res = await api([zodValidator("json", schema, true)], async (ctx) => {
-			const { name } = ctx.req.body as z.infer<typeof schema>;
-			ctx.res.json({ success: true, name });
-		})(customApiEvent);
+		const res = await api(
+			[zodValidator("json", schema, true)],
+			async (ctx) => {
+				const { name } = ctx.req.body as z.infer<typeof schema>;
+				ctx.res.json({ success: true, name });
+			}
+		)(customApiEvent);
 
 		const response = res as any;
 

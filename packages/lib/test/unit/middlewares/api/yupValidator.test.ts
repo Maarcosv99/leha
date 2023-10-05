@@ -5,7 +5,7 @@ import { eventHandlerSetup } from "@/setup";
 import { CustomProvider } from "test/fixture/provider";
 import { apiEvent } from "test/fixture/api-event";
 
-import { yupValidator } from "@/middlewares";
+import { yupValidator } from "@/addons/middlewares";
 import { object, string } from "yup";
 
 describe("Yup Validator middleware api", async () => {
@@ -41,9 +41,12 @@ describe("Yup Validator middleware api", async () => {
 			name: string().min(3).max(255),
 		});
 
-		const res = await api([yupValidator("query", schema, true)], async (ctx) => {
-			ctx.res.json({ success: true });
-		})(apiEvent);
+		const res = await api(
+			[yupValidator("query", schema, true)],
+			async (ctx) => {
+				ctx.res.json({ success: true });
+			}
+		)(apiEvent);
 
 		const response = res as any;
 
@@ -112,9 +115,12 @@ describe("Yup Validator middleware api", async () => {
 			body: { name: "John Doe" },
 		};
 
-		const res = await api([yupValidator("json", schema, true)], async (ctx) => {
-			ctx.res.json({ success: true, name: ctx.req.body.name });
-		})(customApiEvent);
+		const res = await api(
+			[yupValidator("json", schema, true)],
+			async (ctx) => {
+				ctx.res.json({ success: true, name: ctx.req.body.name });
+			}
+		)(customApiEvent);
 
 		const response = res as any;
 

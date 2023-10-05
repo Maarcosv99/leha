@@ -33,6 +33,16 @@ export const Aws = (): Provider => {
 	};
 
 	return {
+		loggingAdditionalInfo: () => ({
+			name: "aws",
+			region: process.env.AWS_REGION || "",
+			stage: process.env.STAGE || "",
+			function: process.env.AWS_LAMBDA_FUNCTION_NAME || "",
+			memory: process.env.AWS_LAMBDA_MEMORY_SIZE,
+			env: process.env.AWS_EXECUTION_ENV,
+			lang: process.env.LANG || "",
+			timezone: process.env.TZ || "",
+		}),
 		api: {
 			handleRequest: (event: APIGatewayProxyEvent): ApiRequest => {
 				const method = event.httpMethod;

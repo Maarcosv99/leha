@@ -1,9 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 
 import { eventHandlerSetup } from "@/setup";
 import { CustomProvider } from "test/fixture/provider";
 import { busEvent } from "test/fixture/bus-event";
-import { ContextBus, Middleware, Provider } from "@/types";
+import { Provider } from "@/types";
 
 describe("Bus", () => {
 	it("should handle event", async () => {
@@ -32,29 +32,6 @@ describe("Bus", () => {
 		).rejects.toThrowError();
 	});
 
-	it("should return undefined with middleware onError", async () => {
-		const error = new Error("Something went wrong");
-
-		const { bus } = eventHandlerSetup({
-			provider: CustomProvider,
-			bus: {
-				middlewares: [
-					{
-						onError: async (error) => {
-							expect(error).toBe(error);
-						},
-					},
-				],
-			},
-		});
-
-		await expect(
-			bus(async () => {
-				throw error;
-			})(busEvent)
-		).resolves.toBeUndefined();
-	});
-
 	it("should receive error on middleware with onError", async () => {
 		const error = new Error("Something went wrong");
 
@@ -71,18 +48,20 @@ describe("Bus", () => {
 			},
 		});
 
-		await bus(
-			[
-				{
-					onError: async (error) => {
-						expect(error).toBe(error);
+		await expect(
+			bus(
+				[
+					{
+						onError: async (error) => {
+							expect(error).toBe(error);
+						},
 					},
-				},
-			],
-			async () => {
-				throw error;
-			}
-		)(busEvent);
+				],
+				async () => {
+					throw error;
+				}
+			)(busEvent)
+		).rejects.toThrowError();
 	});
 
 	it("should return error when bus throws error on middleware onError", async () => {

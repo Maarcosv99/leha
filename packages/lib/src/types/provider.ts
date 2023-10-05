@@ -7,6 +7,7 @@ import {
 } from "@/context";
 
 export interface Provider {
+	loggingAdditionalInfo: () => Record<string, any>;
 	api: {
 		handleRequest: (...args: any[]) => ApiRequest;
 		handleResponse: (response: ApiResponse) => unknown;

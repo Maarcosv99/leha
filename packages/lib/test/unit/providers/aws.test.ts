@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 
 import { eventHandlerSetup } from "@/setup";
 
-import { Aws } from "@/providers";
+import { Aws } from "@/addons/providers";
 
 import { apiEvent } from "test/fixture/api-event";
 import { queueEvent } from "test/fixture/queue-event";

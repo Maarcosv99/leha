@@ -15,7 +15,9 @@ export type EndpointType = "api" | "queue" | "bus";
 export type EndpointArgs<T extends Context> = T extends ContextApi
 	? [Middleware<ContextApi>[], Callback<ContextApi>] | [Callback<ContextApi>]
 	: T extends ContextQueue
-	? [Middleware<ContextQueue>[], Callback<ContextQueue>] | [Callback<ContextQueue>]
+	?
+			| [Middleware<ContextQueue>[], Callback<ContextQueue>]
+			| [Callback<ContextQueue>]
 	: T extends ContextBus
 	? [Middleware<ContextBus>[], Callback<ContextBus>] | [Callback<ContextBus>]
 	: never;

@@ -1,13 +1,15 @@
-import {
+import type {
 	ApiRequest,
 	ApiResponse,
 	QueueEvent,
 	QueueResponse,
 	BusEvent,
 } from "@/context";
+import type { LoggerMethods } from "./logging";
 
 export type BaseContext = {
 	raw: any;
+	log: LoggerMethods;
 };
 
 export type ContextApi = BaseContext & {

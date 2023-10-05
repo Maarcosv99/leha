@@ -3,10 +3,15 @@
 		"email": "marcosvianacdc@gmail.com",
 		"name": "Marcos Viana"
 	},
+	"dependencies": {
+		"lodash.isequal": "^4.5.0"
+	},
 	"description": "Lightweight, event handler agnostic for serverless applications.",
 	"devDependencies": {
 		"@types/aws-lambda": "^8.10.119",
+		"@types/lodash.isequal": "^4.5.6",
 		"@types/node": "^20.5.0",
+		"@vitest/ui": "^0.34.6",
 		"files-folder": "^1.2.4",
 		"tsup": "^7.2.0",
 		"typescript": "^5.1.6",
@@ -73,5 +78,5 @@
 	},
 	"type": "module",
 	"types": "./dist/index.d.ts",
-	"version": "0.1.2"
+	"version": "0.2.0"
 }

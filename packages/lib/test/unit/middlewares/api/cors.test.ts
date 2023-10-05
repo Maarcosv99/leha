@@ -5,7 +5,7 @@ import { eventHandlerSetup } from "@/setup";
 import { CustomProvider } from "test/fixture/provider";
 import { apiEvent } from "test/fixture/api-event";
 
-import { cors } from "@/middlewares/api/cors";
+import { cors } from "@/addons/middlewares/api/cors";
 
 describe("Cors middleware api", async () => {
 	it("should set default cors headers", async () => {
@@ -15,7 +15,9 @@ describe("Cors middleware api", async () => {
 		});
 
 		await api(async (ctx) => {
-			expect(ctx.res.getHeader("access-control-allow-origin")).toEqual("*");
+			expect(ctx.res.getHeader("access-control-allow-origin")).toEqual(
+				"*"
+			);
 		})(apiEvent);
 	});
 
@@ -55,7 +57,8 @@ describe("Cors middleware api", async () => {
 		await api(async (ctx) => {
 			expect(ctx.res.getHeaders()).toStrictEqual({
 				"access-control-allow-origin": "https://example.com",
-				"access-control-allow-methods": "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS",
+				"access-control-allow-methods":
+					"GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS",
 			});
 		})(customEvent);
 	});

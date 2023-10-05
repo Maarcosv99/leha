@@ -13,7 +13,9 @@ describe("Queue", () => {
 			ctx.res.json({ success: true });
 		})(queueEvent);
 
-		expect(response).toStrictEqual(JSON.stringify({ success: true }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: true }, null, 2)
+		);
 	});
 
 	it("should read body", async () => {
@@ -54,7 +56,9 @@ describe("Queue", () => {
 			ctx.res.json({ success: true });
 		})(queueEvent);
 
-		expect(response).toStrictEqual(JSON.stringify({ success: false }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: false }, null, 2)
+		);
 	});
 
 	it("should return custom response with middleware before", async () => {
@@ -75,7 +79,9 @@ describe("Queue", () => {
 			ctx.res.json({ success: true });
 		})(queueEvent);
 
-		expect(response).toStrictEqual(JSON.stringify({ success: false }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: false }, null, 2)
+		);
 	});
 
 	it("should return custom response with middleware onError", async () => {
@@ -132,7 +138,9 @@ describe("Queue", () => {
 			ctx.res.json({ success: true });
 		})(queueEvent);
 
-		expect(response).toStrictEqual(JSON.stringify({ success: false }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: false }, null, 2)
+		);
 	});
 
 	it("should run middlewares after defined on endpoint and global", async () => {
@@ -257,7 +265,9 @@ describe("Queue", () => {
 			ctx.res.json({ success: true });
 		})(queueEvent);
 
-		expect(response).toStrictEqual(JSON.stringify({ success: false }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: false }, null, 2)
+		);
 	});
 
 	it("should run middlewares before defined on endpoint and global", async () => {
@@ -430,7 +440,9 @@ describe("Queue", () => {
 		)(queueEvent);
 
 		expect(mockFnOnErrorGlobal).toHaveBeenCalled();
-		expect(response).toStrictEqual(JSON.stringify({ success: false }, null, 2));
+		expect(response).toStrictEqual(
+			JSON.stringify({ success: false }, null, 2)
+		);
 	});
 
 	it("should run middlewares onError defined on endpoint", async () => {
@@ -443,23 +455,25 @@ describe("Queue", () => {
 
 		const error = new Error("Something went wrong");
 
-		await queue(
-			[
-				{
-					onError: async (err) => {
-						mockFnOnError1(err);
+		await expect(
+			queue(
+				[
+					{
+						onError: async (err) => {
+							mockFnOnError1(err);
+						},
 					},
-				},
-				{
-					onError: async (err) => {
-						mockFnOnError2(err);
+					{
+						onError: async (err) => {
+							mockFnOnError2(err);
+						},
 					},
-				},
-			],
-			async () => {
-				throw error;
-			}
-		)(queueEvent);
+				],
+				async () => {
+					throw error;
+				}
+			)(queueEvent)
+		).rejects.toThrowError();
 
 		expect(mockFnOnError1).toHaveBeenCalledWith(error);
 		expect(mockFnOnError2).toHaveBeenCalledWith(error);
@@ -492,23 +506,25 @@ describe("Queue", () => {
 			},
 		});
 
-		await queue(
-			[
-				{
-					onError: async (err) => {
-						mockFnOnErrorEndpoint1(err);
+		await expect(
+			queue(
+				[
+					{
+						onError: async (err) => {
+							mockFnOnErrorEndpoint1(err);
+						},
 					},
-				},
-				{
-					onError: async (err) => {
-						mockFnOnErrorEndpoint2(err);
+					{
+						onError: async (err) => {
+							mockFnOnErrorEndpoint2(err);
+						},
 					},
-				},
-			],
-			async () => {
-				throw error;
-			}
-		)(queueEvent);
+				],
+				async () => {
+					throw error;
+				}
+			)(queueEvent)
+		).rejects.toThrowError();
 
 		expect(mockFnOnErrorGlobal1).toHaveBeenCalledWith(error);
 		expect(mockFnOnErrorGlobal2).toHaveBeenCalledWith(error);
@@ -518,7 +534,7 @@ describe("Queue", () => {
 	});
 
 	it("should receive error on middleware with onError", async () => {
-		const errorMessage = "Something went wrong";
+		const errorObj = new Error("Something went wrong");
 
 		const { queue } = eventHandlerSetup({
 			provider: CustomProvider,
@@ -526,25 +542,27 @@ describe("Queue", () => {
 				middlewares: [
 					{
 						onError: async (error) => {
-							expect(error.message).toBe(errorMessage);
+							expect(error.message).toBe(errorObj.message);
 						},
 					},
 				],
 			},
 		});
 
-		await queue(
-			[
-				{
-					onError: async (error) => {
-						expect(error.message).toBe(errorMessage);
+		await expect(
+			queue(
+				[
+					{
+						onError: async (error) => {
+							expect(error.message).toBe(errorObj.message);
+						},
 					},
-				},
-			],
-			async () => {
-				throw new Error("Something went wrong");
-			}
-		)(queueEvent);
+				],
+				async () => {
+					throw errorObj;
+				}
+			)(queueEvent)
+		).rejects.toThrowError();
 	});
 
 	it("should return error when queue throws error on middleware after", async () => {

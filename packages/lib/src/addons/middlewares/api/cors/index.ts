@@ -15,7 +15,15 @@ interface CorsOptions {
 export function cors(options?: CorsOptions): Middleware<ContextApi> {
 	const defaultOptions: CorsOptions = {
 		origin: "*",
-		allowedMethods: ["GET", "HEAD", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"],
+		allowedMethods: [
+			"GET",
+			"HEAD",
+			"PUT",
+			"POST",
+			"DELETE",
+			"PATCH",
+			"OPTIONS",
+		],
 		allowedHeaders: [],
 		exposeHeaders: [],
 	};
@@ -35,7 +43,8 @@ export function cors(options?: CorsOptions): Middleware<ContextApi> {
 	return {
 		before: async (ctx) => {
 			const allowOrigin = findOrigin(ctx.req.headers.origin);
-			if (allowOrigin) ctx.res.header("Access-Control-Allow-Origin", allowOrigin);
+			if (allowOrigin)
+				ctx.res.header("Access-Control-Allow-Origin", allowOrigin);
 
 			if (corsOptions.credentials) {
 				ctx.res.header("Access-Control-Allow-Credentials", "true");
@@ -51,7 +60,10 @@ export function cors(options?: CorsOptions): Middleware<ContextApi> {
 		after: async (ctx) => {
 			if (ctx.req.method === "OPTIONS") {
 				if (corsOptions.maxAge) {
-					ctx.res.header("Access-Control-Max-Age", corsOptions.maxAge.toString());
+					ctx.res.header(
+						"Access-Control-Max-Age",
+						corsOptions.maxAge.toString()
+					);
 				}
 
 				if (corsOptions.allowedMethods?.length) {

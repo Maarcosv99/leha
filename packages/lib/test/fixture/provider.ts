@@ -10,6 +10,9 @@ import {
 // Based on AWS Events.
 
 export const CustomProvider: Provider = {
+	loggingAdditionalInfo() {
+		return { name: "aws" };
+	},
 	api: {
 		handleRequest: (...args: any[]): ApiRequest => {
 			const event = args[0];
