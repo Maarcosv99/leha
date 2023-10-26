@@ -51,7 +51,7 @@ export const Aws = (): Provider => {
 				const queryStringParameters = event.queryStringParameters || {};
 				const pathParameters = event.path || "";
 				const cookies = event.headers["Cookie"] || {};
-				const ipAddress = event.requestContext.identity.sourceIp;
+				const ipAddress = event.requestContext.identity.sourceIp || "";
 
 				return new ApiRequest(
 					method,
